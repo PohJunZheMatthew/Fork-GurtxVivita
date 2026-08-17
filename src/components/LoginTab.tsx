@@ -3,7 +3,7 @@ import {BasicTabProps} from "../app";
 import React, {useEffect, useState} from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import AdminViewTab from "./AdminViewTab";
-import { UserViewTab } from "./UserViewTab";
+import { MapViewTab } from "./UserViewTab";
 import {
     isFirebaseAuthConfigured,
     isGoogleLoginSupported,
@@ -13,6 +13,9 @@ import {
 import { recordAccountLogin } from "../services/accountSession";
 import { useI18n } from "../i18n/i18n";
 
+// handleNewTab now lives on BasicTabProps itself (see app.tsx), so it no
+// longer needs to be threaded through as its own constructor argument —
+// it arrives via {...props} like everything else.
 type LoginTabContentProps = BasicTabProps & {
     actL: number;
     loginTabId: string;
@@ -22,6 +25,7 @@ export default class LoginTab implements Tab {
     content: React.ReactNode;
     id: string = crypto.randomUUID();
     name: string = "Login";
+    closable:boolean = true
 
     constructor(props: BasicTabProps, actL: number) {
         this.content = (
@@ -77,7 +81,9 @@ function LoginTabContent({
         setNoteIsSuccess(true);
         setTabs((prevTabs) => {
             const tabsWithoutLogin = prevTabs.filter((tab) => tab.id !== loginTabId);
-            const targetName = isAdmin ? "Admin View" : "User View";
+            // Non-admin users land on the Map tab now that User View has
+            // been split into Map + Search for Items.
+            const targetName = isAdmin ? "Admin View" : "Map";
             const existingIndex = tabsWithoutLogin.findIndex(tab => tab.name === targetName);
 
             if (existingIndex !== -1) {
@@ -85,7 +91,8 @@ function LoginTabContent({
                 return tabsWithoutLogin;
             }
 
-            const nextTab = isAdmin ? new AdminViewTab() : new UserViewTab();
+            const nextTab: Tab = isAdmin ? new AdminViewTab() : new MapViewTab();
+            nextTab.closable = true;
             setTabIndex(tabsWithoutLogin.length);
             return [...tabsWithoutLogin, nextTab];
         });
@@ -284,7 +291,7 @@ function LoginTabContent({
                             ? "Sign in with Google"
                             : firebaseConfigured
                                 ? "Set VITE_GOOGLE_DESKTOP_CLIENT_ID and VITE_GOOGLE_DESKTOP_CLIENT_SECRET in .env to enable Google login in the desktop app"
-                            : "Add Firebase Vite environment variables to enable Google login"
+                                : "Add Firebase Vite environment variables to enable Google login"
                     }
                     style={{
                         width: "100%",

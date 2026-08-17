@@ -1,4 +1,8 @@
-/*@import "tailwindcss";*/
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --app-window-radius: 12px;
   --text: #000000;
@@ -52,7 +56,9 @@
   padding: 0px;
   margin: 0px;
 }
-
+::-webkit-scrollbar-track {
+  background:var(--bg);
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #000000;

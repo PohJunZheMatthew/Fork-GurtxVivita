@@ -3,7 +3,7 @@
     align-items: center;
     app-region: drag;
     height: 42px;
-    background: linear-gradient(135deg, var(--viventory-shell-start) 0%, var(--viventory-shell-mid) 46%, var(--viventory-shell-end) 100%);
+    background: var(--viventory-bg);
     color: var(--viventory-shell-text);
     border-bottom: 1px solid var(--viventory-border);
 }

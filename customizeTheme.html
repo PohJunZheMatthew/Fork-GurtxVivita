@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import "tailwindcss";
+
+        html, body {
+            background: transparent !important;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .popup-container {
+            background: #2f3136; /* Your Tauri popup background color */
+            color: #ffffff;
+            border: 1px solid #4f545c;
+            border-radius: 12px;
+            width: 100vw;
+            height: 100vh;
+            padding: 12px; /* Uniform internal padding spacing */
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="popup-container"></div>
+<script type="module" src="/src/components/Theme/ThemeSetterPopup.tsx"></script>
+</body>
+</html>

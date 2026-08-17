@@ -8,7 +8,7 @@ class DocsView implements Tab {
     id: string = crypto.randomUUID()
     name: string = "Documentation"
     content: ReactNode
-
+    closable=false
     constructor() {
         this.content = <DocsContent />
     }

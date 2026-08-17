@@ -85,7 +85,7 @@ const styles: Styles = {
         border: active ? '2px solid var(--viventory-tab-active-border)' : '1px solid var(--viventory-border)',
         borderRadius: 999,
         color: active ? 'var(--viventory-text)' : 'var(--viventory-muted-text)',
-        background: active ? 'var(--viventory-active-tab)' : 'var(--viventory-surface)',
+        background: 'var(--viventory-surface)',
         whiteSpace: 'nowrap',
         cursor: 'pointer'
     }),
