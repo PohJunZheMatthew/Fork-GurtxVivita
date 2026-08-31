@@ -31,18 +31,8 @@ import {VscRightPanelHide} from "react-icons/vsc";
 import { load, type Store } from "@tauri-apps/plugin-store";
 import {writeText} from "@tauri-apps/plugin-clipboard-manager";
 import { MdClearAll } from "react-icons/md";
-
-const openrouter = new OpenRouter({
-    apiKey: "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"
-});
-const groq = new Groq({
-    // apiKey:"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",
-    apiKey:"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",
-    dangerouslyAllowBrowser:true
-});
-
-
-
+import {groq} from "../secrets.ts";
+//it's over isn't it
 const palette = {
     ink: "#24262B",
     muted: "#838998",
