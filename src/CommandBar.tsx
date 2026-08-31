@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState, useRef } from "react";
 import { CommandArgumentType } from "./types";
-import { commands } from "./app";
+import {commands, OpenTabCommand, SearchCommand} from "./app";
+import {MaterialSearchTab} from "./components/UserViewTab.tsx";
 
 function getTypeString(arg: CommandArgumentType): String {
     switch (arg) {
@@ -18,14 +19,14 @@ function getTypeString(arg: CommandArgumentType): String {
 export type CmdProps = {
     setVisibility: (b: boolean) => void;
 };
-
 export function CommandBar({ setVisibility }: CmdProps): ReactElement {
     const [text, setText] = useState("");
     const menuRef = useRef<HTMLDivElement | null>(null);
 
-    const visCommands = commands.filter(command =>
+    var visCommands = commands.filter(command =>
         command.name.toLowerCase().includes(text.toLowerCase())
     );
+    visCommands.push(new OpenTabCommand(`Search for "${text}"`,`Search for Items`,()=>new MaterialSearchTab(text)))
 
     const [bounds, setBounds] = useState({ left: 0, width: 0 });
 
@@ -90,7 +91,7 @@ export function CommandBar({ setVisibility }: CmdProps): ReactElement {
                 width: `${bounds.width}px`,
                 zIndex: 1000000000,
                 height: "240px",
-                background: "var(--viventory-welcome-card)",
+                background: "var(--viventory-welcome-bg)",
                 color: "var(--viventory-text)",
                 overflow: "hidden",
                 display: "flex",
@@ -160,7 +161,7 @@ export function CommandBar({ setVisibility }: CmdProps): ReactElement {
                                 setVisibility(false)
                             }}
                         >
-                            {`> ${value.name} ${args}`}
+                            {`${value.name} ${args}`}
                         </button>
                     );
                 })}

@@ -58,7 +58,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-007-small-coloured-wooden-pegs",
         name: "Small Coloured Wooden Pegs",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Bedok, Box 4; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Bedok, Box 4; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -76,7 +76,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-009-double-sided-tape-standard",
         name: "Double Sided Tape (Standard)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Artfriend",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Artfriend",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -319,7 +319,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-036-workable-fixative",
         name: "Workable Fixative",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Bedok 6; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Bedok 6; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -643,7 +643,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-072-masking-tape-thin",
         name: "Masking Tape (Thin)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Hardware Shops",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Hardware Shops",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -715,7 +715,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-080-circle-adhesive-labels",
         name: "Circle Adhesive Labels",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Box 2; Stock status: In Stock; Supplier: Popular",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Box 2; Stock status: In Stock; Supplier: Popular",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -742,7 +742,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-083-glue-for-shoes-uhu",
         name: "Glue for shoes (UHU)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Textile Station; Packed in/moved to: Sewing Box 7; Stock status: In Stock; Kit: Shoe Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Textile Station; Packed in/moved to: Sewing Box 7; Stock status: In Stock; Kit: Shoe Kit",
         quantity: 1,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -778,7 +778,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-087-pvc-pipe-adhesive",
         name: "PVC Pipe Adhesive",
-        description: "Category: Adhesive. Fasteners. Wires; Packed in/moved to: Bedok 6; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Packed in/moved to: Bedok 6; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -922,7 +922,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-103-ropes-assorted",
         name: "Ropes(assorted)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Prototype Station; Packed in/moved to: Box 13; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Prototype Station; Packed in/moved to: Box 13; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "tinkering-studio",
@@ -1210,7 +1210,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-135-recycled-velcro",
         name: "Recycled Velcro",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Textile Station; Packed in/moved to: Box 12; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Textile Station; Packed in/moved to: Box 12; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -1597,7 +1597,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-178-craft-glue",
         name: "Craft glue",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Paper Station; Packed in/moved to: Box 2; Stock status: In Stock; Supplier: Daiso",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Paper Station; Packed in/moved to: Box 2; Stock status: In Stock; Supplier: Daiso",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -1777,7 +1777,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-198-fabric-glue-aleene-s-original",
         name: "Fabric Glue - Aleene\u2019s Original",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Textile Station; Stock status: In Stock; Kit: Sewing kit; Used for: textiles",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Textile Station; Stock status: In Stock; Kit: Sewing kit; Used for: textiles",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -1894,7 +1894,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-211-binder-clip-standard",
         name: "Binder Clip (Standard)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Box 5; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Box 5; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -2524,7 +2524,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-281-zip-tie",
         name: "Zip Tie",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -2902,7 +2902,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-323-hot-glue-stick",
         name: "Hot Glue Stick",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Prototype Station; Packed in/moved to: Bedok; Stock status: In Stock; Used for: decoratives, paper, plastic, textiles, wood; Supplier: Artfriend; Purchase remarks: 30 sticks",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Prototype Station; Packed in/moved to: Bedok; Stock status: In Stock; Used for: decoratives, paper, plastic, textiles, wood; Supplier: Artfriend; Purchase remarks: 30 sticks",
         quantity: 0,
         unit: "items",
         compartmentId: "tinkering-studio",
@@ -3055,7 +3055,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-340-glue-for-shoes-soles",
         name: "Glue for shoes - soles",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Textile Station; Packed in/moved to: Sewing Box 7; Stock status: In Stock; Kit: Shoe Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Textile Station; Packed in/moved to: Sewing Box 7; Stock status: In Stock; Kit: Shoe Kit",
         quantity: 2,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -3451,7 +3451,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-384-adhesive-glue-gots",
         name: "Adhesive Glue Gots",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Tech Sat Luggage; Stock status: In Stock; Supplier: Artfriend",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Tech Sat Luggage; Stock status: In Stock; Supplier: Artfriend",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -3892,7 +3892,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-433-blutack",
         name: "Blutack",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Hardware Shops",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Hardware Shops",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -3982,7 +3982,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-443-double-sided-tape-thin",
         name: "Double Sided Tape (Thin)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Artfriend",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Artfriend",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4081,7 +4081,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-454-rectangle-adhesive-labels",
         name: "Rectangle Adhesive labels",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Box 2; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Box 2; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4225,7 +4225,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-470-mod-podge-matt",
         name: "Mod Podge - Matt",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4495,7 +4495,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-500-s-hooks",
         name: "S Hooks",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Box 2; Stock status: In Stock; Supplier: Daiso",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Box 2; Stock status: In Stock; Supplier: Daiso",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4720,7 +4720,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-525-suction-hook",
         name: "Suction Hook",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Box 1; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Box 1; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4783,7 +4783,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-532-permanent-fabric-adhesive-glue",
         name: "Permanent Fabric Adhesive Glue",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Textile Station; Packed in/moved to: Bedok 4; Stock status: In Stock; Kit: Sewing kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Textile Station; Packed in/moved to: Bedok 4; Stock status: In Stock; Kit: Sewing kit",
         quantity: 1,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4891,7 +4891,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-544-scotch-tape",
         name: "Scotch Tape",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Popular",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Popular",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4900,7 +4900,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-545-craft-glue-stick",
         name: "Craft Glue Stick",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Paper Station; Packed in/moved to: Box 2, Eunos; Stock status: In Stock; Supplier: Daiso",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Paper Station; Packed in/moved to: Box 2, Eunos; Stock status: In Stock; Supplier: Daiso",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -4990,7 +4990,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-555-mod-podge-magic-dimensional",
         name: "Mod Podge - Magic Dimensional",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -5008,7 +5008,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-557-acrylic-glue",
         name: "Acrylic Glue",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Crew Only Storage (Main); Stock status: Low; Supplier: Dama",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Crew Only Storage (Main); Stock status: Low; Supplier: Dama",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -5017,7 +5017,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-558-string-rope-box",
         name: "String/Rope Box",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Textile Station; Packed in/moved to: Box 19; Stock status: In Stock; Kit: Leather Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Textile Station; Packed in/moved to: Box 19; Stock status: In Stock; Kit: Leather Kit",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -5098,7 +5098,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-567-mod-podge-gloss",
         name: "Mod Podge - Gloss",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -5557,7 +5557,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-618-masking-tape-thick",
         name: "Masking Tape (Thick)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Hardware Shops",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Hardware Shops",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -5584,7 +5584,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-621-mini-zip-tie",
         name: "Mini Zip Tie",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Box 12; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Box 12; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -5692,7 +5692,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-633-duct-tape",
         name: "Duct Tape",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Hardware Shops",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Hardware Shops",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -5908,7 +5908,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-657-adhesive-spray-mount",
         name: "Adhesive Spray Mount",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Crew Only Storage (Main), Decorative Station; Packed in/moved to: Bedok 6; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Crew Only Storage (Main), Decorative Station; Packed in/moved to: Bedok 6; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -6106,7 +6106,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-679-mod-podge-sparkle",
         name: "Mod Podge - Sparkle",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -6178,7 +6178,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-687-mod-podge-outdoor",
         name: "Mod Podge (Outdoor)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -6430,7 +6430,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-715-mod-podge-matt-paper",
         name: "Mod Podge - Matt (Paper)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Decorative Station; Packed in/moved to: Box 2; Stock status: In Stock; Kit: Jewellery Kit",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -6781,7 +6781,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-754-double-sided-tape-thick",
         name: "Double Sided Tape (Thick)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Artfriend",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Artfriend",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -6862,7 +6862,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-763-duck-masking-tape",
         name: "Duck Masking Tape",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Artfriend",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Stock status: In Stock; Supplier: Artfriend",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -7141,7 +7141,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-794-binder-clip-large",
         name: "Binder Clip (Large)",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Box 5; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Box 5; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -7591,7 +7591,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-844-hydrochloric-acid",
         name: "Hydrochloric Acid",
-        description: "Category: Adhesive. Fasteners. Wires; Packed in/moved to: Box 10; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Packed in/moved to: Box 10; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -7645,7 +7645,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-850-iron-on-adhesive-tape",
         name: "Iron-On Adhesive Tape",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Textile Station; Packed in/moved to: Bedok 4; Stock status: In Stock",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Textile Station; Packed in/moved to: Bedok 4; Stock status: In Stock",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -7735,7 +7735,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-860-superglue",
         name: "Superglue",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Bedok, Eunos; Stock status: In Stock; Supplier: Daiso; Purchase remarks: Comes with 4 mini tubes, Red label",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Bedok, Eunos; Stock status: In Stock; Supplier: Daiso; Purchase remarks: Comes with 4 mini tubes, Red label",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",
@@ -7870,7 +7870,7 @@ export const vivitaInventoryMaterials: Material[] = [
     {
         id: "vivita-inventory-875-transparent-packing-tape",
         name: "Transparent Packing Tape",
-        description: "Category: Adhesive. Fasteners. Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Popular",
+        description: "Category: Adhesive, Fasteners, Wires; Where to find it: Office Supplies; Packed in/moved to: Eunos; Stock status: In Stock; Supplier: Popular",
         quantity: 0,
         unit: "items",
         compartmentId: "vivi-shelving",

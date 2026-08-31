@@ -3,7 +3,7 @@
   "identifier": "default",
   "description": "Capability for the main window",
   "windows": [
-    "main"
+    "*"
   ],
   "permissions": [
     "core:default",
@@ -16,7 +16,9 @@
     "os:default",
     "core:window:default",
     "core:window:allow-start-dragging",
+    "clipboard-manager:allow-write-text",
     "oauth:default",
+    "core:window:allow-close",
     {
       "identifier": "http:default",
       "allow": [{ "url": "https://oauth2.googleapis.com/*" }]

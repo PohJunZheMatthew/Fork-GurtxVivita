@@ -1,4 +1,3 @@
-
 export interface Renderable {
     render(): void;
 }
@@ -7,6 +6,7 @@ export type MaterialStockStatus = "in-stock" | "low" | "out-of-stock" | "wishlis
 
 export interface Material {
     id: string;
+    image?:string;
     name: string;
     description: string;
     quantity: number;
@@ -115,6 +115,8 @@ export interface Tab{
     id: string
     name: string;
     content: React.ReactNode;
+    icon?:React.ReactNode;
+    closable?: boolean;
 }
 
 export enum CommandArgumentType{

@@ -7,7 +7,7 @@ import Titlebar from "./titlebar"
 import {Command, CommandArgument, Tab, UserPerms} from "./types"
 import "react-icons/io"
 import {IoIosCloseCircle, IoIosCloseCircleOutline} from 'react-icons/io'
-import {MdAddCircle, MdAddCircleOutline} from "react-icons/md";
+import {MdAddCircle, MdAddCircleOutline, MdOutlineWavingHand} from "react-icons/md";
 import {arrayMove, horizontalListSortingStrategy, SortableContext, useSortable} from "@dnd-kit/sortable"
 
 import {CSS} from "@dnd-kit/utilities"
@@ -17,7 +17,7 @@ import Settings from "./components/Settings/Settings";
 import DocsView from "./components/Docs/DocsView";
 import {CommandBar} from "./CommandBar";
 import LoginTab from "./components/LoginTab";
-import {UserViewTab} from "./components/UserViewTab";
+import {MapViewTab, MaterialSearchTab} from "./components/UserViewTab";
 import { applyAppearancePrefs, loadAppearancePrefs } from "./components/Settings/appearancePreferences";
 import { MakerKioskTab } from "./components/MakerKiosk";
 import vivitaLogo from "./assets/vivita-logo.png";
@@ -28,23 +28,36 @@ import { consumeGoogleRedirectResult } from "./services/firebaseAuth";
 import { recordAccountLogin } from "./services/accountSession";
 import { translateTabName, useI18n } from "./i18n/i18n";
 import {platform} from "@tauri-apps/plugin-os";
-import {FaHome, FaRobot} from "react-icons/fa";
+import {FaHome, FaRegWindowRestore, FaRobot} from "react-icons/fa";
 import {FaGear} from "react-icons/fa6";
+import { invoke } from "@tauri-apps/api/core"
+import {color} from "framer-motion";
+import {BsGearFill} from "react-icons/bs";
 
 export type BasicTabProps = {
     tabs: Tab[];
     setTabs: React.Dispatch<React.SetStateAction<Tab[]>>;
     tabIndex: number;
     setTabIndex: (index: number) => void;
-    handleNewTab: () => number;
     setTab: (index: number, tab: Tab) => void;
     handleClosingTab: (index: number) => void;
     handleMaterialSearch: (query: string) => void;
+    // Appends a placeholder tab and returns its index — see the
+    // implementation in App() for the full contract. This was previously
+    // passed around ad hoc (causing "does not exist on BasicTabProps" /
+    // "expected 3 arguments" errors wherever it was threaded through as a
+    // one-off extra prop or constructor arg); it's now a first-class part
+    // of BasicTabProps so every consumer of these props has access to it.
+    handleNewTab: () => number;
 }
 
 let commandTabProps: BasicTabProps | undefined
 
-export function focusOrOpenTab(name: string, tabFactory: () => Tab): void {
+// Switches to the tab if it's already open; otherwise actually creates it
+// via tabFactory and marks it closable, since it was opened on demand.
+// (Previously this silently no-opped when the tab wasn't found — tabFactory
+// was accepted but never called.)
+export function focusTab(name: string, tabFactory: () => Tab): void {
     const bt = commandTabProps
     if (!bt) return
 
@@ -56,14 +69,16 @@ export function focusOrOpenTab(name: string, tabFactory: () => Tab): void {
     }
 
     const newIndex = bt.handleNewTab()
-    bt.setTab(newIndex, tabFactory())
+    const newTab = tabFactory()
+    newTab.closable = true
+    bt.setTab(newIndex, newTab)
 }
 
 export class SearchCommand implements Command {
     id: string = crypto.randomUUID()
     args: CommandArgument[] = []
     name: string = "Welcome"
-    onRun: () => void = () => focusOrOpenTab("Welcome", () => new welcomeTab())
+    onRun: () => void = () => focusTab("Welcome", () => new welcomeTab())
     static bt:BasicTabProps
     static receive (bt0: BasicTabProps):void{
         SearchCommand.bt=bt0;
@@ -79,7 +94,7 @@ export class OpenTabCommand implements Command {
 
     constructor(name: string, tabName: string, tabFactory: () => Tab) {
         this.name = name
-        this.onRun = () => focusOrOpenTab(tabName, tabFactory)
+        this.onRun = () => focusTab(tabName, tabFactory)
     }
 }
 
@@ -98,15 +113,20 @@ export class LoginCommand implements Command {
             return
         }
 
+        // Same fix as focusTab: actually open the tab when it isn't
+        // already there, and mark it closable since it's on demand.
         const newIndex = bt.handleNewTab()
-        bt.setTab(newIndex, new LoginTab(bt, newIndex))
+        const loginTab = new LoginTab(bt, newIndex)
+        loginTab.closable = true
+        bt.setTab(newIndex, loginTab)
     }
 }
 
 export var commands:Command[] = [
     new SearchCommand(),
     new OpenTabCommand("Maker Bot", "Maker Bot", () => new MakerKioskTab()),
-    new OpenTabCommand("Inventory", "User View", () => new UserViewTab()),
+    new OpenTabCommand("Map", "Map", () => new MapViewTab()),
+    new OpenTabCommand("Search Items", "Search for Items", () => new MaterialSearchTab()),
     new OpenTabCommand("Docs", "Documentation", () => new DocsView()),
     new OpenTabCommand("Settings", "Settings", () => new Settings()),
     new LoginCommand(),
@@ -117,6 +137,9 @@ export class welcomeTab implements Tab {
     id = crypto.randomUUID()
     name: string = "Welcome"
     content: React.ReactNode
+    // Permanent tab — always present, never user-closable.
+    closable: boolean = false
+    icon:React.ReactNode = <MdOutlineWavingHand/>
     static props:BasicTabProps
 
     constructor() {
@@ -132,10 +155,9 @@ function WelcomeContent() {
     const searchInputId = "welcome-search";
 
     const quickLinks: Array<{ label: string; open: () => void }> = [
-        { label: t("link.makerBot"), open: () => focusOrOpenTab("Maker Bot", () => new MakerKioskTab()) },
-        { label: t("link.inventory"), open: () => focusOrOpenTab("User View", () => new UserViewTab()) },
-        { label: t("link.docs"), open: () => focusOrOpenTab("Documentation", () => new DocsView()) },
-        { label: t("link.settings"), open: () => focusOrOpenTab("Settings", () => new Settings()) },
+        { label: t("link.makerBot"), open: () => focusTab("Maker Bot", () => new MakerKioskTab()) },
+        { label: t("Map"), open: () => focusTab("Map", () => new MapViewTab()) },
+        { label: t("link.settings"), open: () => focusTab("Settings", () => new Settings()) },
     ];
 
     return(
@@ -145,7 +167,7 @@ function WelcomeContent() {
                 height: "100%",
                 width: "100%",
                 boxSizing: "border-box",
-                background: "var(--viventory-welcome-bg)",
+                background: "var(--viventory-bg)",
                 color: "var(--viventory-text)",
                 overflow: "auto",
                 display: "flex",
@@ -296,27 +318,24 @@ function RenderTabBarTab({
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-        width: "190px",
+        width: "170px",
         padding: "7px 14px",
-        borderRadius: "10px",
         height: "30px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         background:
-            index === currentTabIndex
-                ? "var(--viventory-active-tab)"
-                : "var(--viventory-tab)",
+            "var(--viventory-muted-surface)",
         color: "var(--viventory-text)",
-        border:
+        borderBottom:
             index === currentTabIndex
-                ? "2px solid var(--viventory-tab-active-border)"
-                : "1px solid var(--viventory-border)",
+                ? "0px solid var(--viventory-tab-active-border)"
+                : "2.5px solid var(--viventory-border)",
         boxShadow:
             index === currentTabIndex
                 ? "0 10px 22px rgba(15, 23, 42, 0.14)"
                 : "none",
-        fontWeight: index === currentTabIndex ? 750 : 650,
+        fontWeight: index === currentTabIndex ? 350 : 300,
 
         userSelect: "none" as const,
 
@@ -337,6 +356,7 @@ function RenderTabBarTab({
             style={style}
             onClick={() => setTabIndex(index)}
         >
+            {(tab.icon!=null) ? (tab.icon) : (<FaRegWindowRestore/>)}
             <div
                 {...listeners}
                 style={{
@@ -351,42 +371,33 @@ function RenderTabBarTab({
             >
                 {translateTabName(language, tab.name)}
             </div>
-
-            <button
-                onPointerDown={(e) => e.stopPropagation()}
-
-                onMouseEnter={() => setIsHovered(true)}
-
-                onMouseLeave={() => setIsHovered(false)}
-
-                onClick={(e) => {
-
-                    e.stopPropagation()
-
-                    onClose(index)
-                }}
-
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background:
-                        isHovered
-                            ? "rgba(255,255,255,0.7)"
-                            : "transparent",
-                    borderRadius: "100%",
-                    border: "1.5px solid transparent",
-                    padding: "5px",
-                    cursor: "pointer",
-                    marginLeft: "5px",
-                }}
-            >
-                {
-                    isHovered
-                        ? <IoIosCloseCircle size={20} color="currentColor" />
-                        : <IoIosCloseCircleOutline size={20} color="currentColor" />
-                }
-            </button>
+            {/*
+                Only tabs explicitly marked closable render a close control.
+                Permanent tabs (Welcome, and anything else with
+                closable !== true) have no way for the user to close them.
+            */}
+            {tab.closable && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onClose(index)
+                    }}
+                    style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: "6px",
+                        padding: 0,
+                        color: "var(--viventory-muted-text)",
+                        flexShrink: 0,
+                    }}
+                    aria-label="Close tab"
+                >
+                    <IoIosCloseCircleOutline size={16} />
+                </button>
+            )}
         </div>
     )
 }
@@ -454,23 +465,41 @@ function RenderTabBar({
 
                 strategy={horizontalListSortingStrategy}
             >
+                <style>{`
+        .custom-scroll-container {
+            /* FORCE the Tauri Webview shell to allow dark or light scrollbar mutations */
+            color-scheme: dark light !important; 
+        }
+        .custom-scroll-container::-webkit-scrollbar {
+            height: 6px !important;
+            display: block !important;
+        }
+        .custom-scroll-container::-webkit-scrollbar-track {
+            background: var(--bg) !important;
+        }
+        .custom-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--viventory-border) !important;
+            border-radius: 9999px !important;
+        }
+    `}</style>
+
                 <div
                     style={{
                         borderRadius: "0px",
                         display: "flex",
                         alignItems: "center",
-                        width: "100%",
+                        width: "fit-content",
                         padding: "8px 10px",
                         height: "54px",
                         gap: "8px",
-                        overflowX: "scroll",
-                        scrollbarWidth:"thin",
-                        scrollbarGutter:"unset",
+                        overflowX: "auto",
                         overflowY: "hidden",
                         background: "var(--viventory-muted-surface)",
                         borderBottom: "1px solid var(--viventory-border)",
-                        boxSizing: "border-box"
+                        boxSizing: "border-box",
+                        flex: "2"
                     }}
+                    className="custom-scroll-container"
                 >
                     {
                         tabs.map((tab, index) => (
@@ -486,41 +515,6 @@ function RenderTabBar({
                             />
                         ))
                     }
-
-                    <button
-                        onMouseEnter={() => setIsHovered(true)}
-
-                        onMouseLeave={() => setIsHovered(false)}
-
-                        onClick={(e) => {
-
-                            e.stopPropagation()
-
-                            handleNewTab()
-                        }}
-
-                        style={{
-                            flexShrink: 0,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            background:
-                                isHovered
-                                    ? "var(--viventory-active-tab)"
-                                    : "transparent",
-                            borderRadius: "100%",
-                            border: "1.5px solid var(--viventory-border)",
-                            padding: "5px",
-                            cursor: "pointer",
-                            color: "var(--viventory-text)",
-                        }}
-                    >
-                        {
-                            isHovered
-                                ? <MdAddCircle size={18} color="currentColor" />
-                                : <MdAddCircleOutline size={18} color="currentColor" />
-                        }
-                    </button>
                 </div>
             </SortableContext>
         </DndContext>
@@ -532,23 +526,19 @@ function RenderMobileTabBar({
                                 setTabs,
                                 tabIndex,
                                 setTabIndex,
-                                handleNewTab,
                                 setTab,
                                 handleClosingTab,
                                 handleMaterialSearch}:BasicTabProps):React.ReactElement{
 
     const currentName = tabs[tabIndex]?.name
 
-    const openOrFocus = (name: string, factory: () => Tab) => {
+    const focus = (name: string, factory: () => Tab) => {
         const existingIndex = tabs.findIndex(tab => tab.name === name)
 
         if (existingIndex !== -1) {
             setTabIndex(existingIndex)
             return
         }
-
-        const newIndex = handleNewTab()
-        setTab(newIndex, factory())
     }
 
     const navButtonStyle = (active: boolean): React.CSSProperties => ({
@@ -582,21 +572,21 @@ function RenderMobileTabBar({
         }}>
             <button
                 style={navButtonStyle(currentName === "Welcome")}
-                onClick={() => openOrFocus("Welcome", () => new welcomeTab())}
+                onClick={() => focus("Welcome", () => new welcomeTab())}
             >
                 <FaHome/>
                 Home
             </button>
             <button
                 style={navButtonStyle(currentName === "Maker Bot")}
-                onClick={() => openOrFocus("Maker Bot", () => new MakerKioskTab())}
+                onClick={() => focus("Maker Bot", () => new MakerKioskTab())}
             >
                 <FaRobot />
                 MakerBot
             </button>
             <button
                 style={navButtonStyle(currentName === "Settings")}
-                onClick={() => openOrFocus("Settings", () => new Settings())}
+                onClick={() => focus("Settings", () => new Settings())}
             >
                 <FaGear />
                 Settings
@@ -648,34 +638,17 @@ function RenderTab(
 function AppCommandEntry({ setCmdBarVis }: { setCmdBarVis: (visible: boolean) => void }) {
     const { t } = useI18n();
     return (
-        <div
+        <button
+            className="command-button"
+            type="button"
+            onClick={() => setCmdBarVis(true)}
             style={{
-                minHeight: "42px",
-                display: "grid",
-                gridTemplateColumns: "minmax(120px, 1fr) minmax(260px, 520px) minmax(120px, 1fr)",
-                alignItems: "center",
-                padding: "6px 18px",
-                boxSizing: "border-box",
-                background: "var(--viventory-shell-start)",
-                borderBottom: "1px solid var(--viventory-border)",
-                color: "var(--viventory-shell-text)",
-                flexShrink: 0,
+                width:"fit-content",
+                minWidth:"135px"
             }}
         >
-            <div />
-            <button
-                className="command-button"
-                type="button"
-                onClick={() => setCmdBarVis(true)}
-                style={{
-                    width: "100%",
-                    justifyContent: "flex-start",
-                }}
-            >
-                &gt; {t("app.enterCommand")}
-            </button>
-            <div />
-        </div>
+            Search&ensp;<span className={"rounded-lg border aspect-square"}>{(platform()=="macos") ? <kbd>⌘</kbd>: ((platform()!="windows") ? <kbd>meta</kbd>:<kbd>⊞</kbd>)}</span>+<span className={"rounded-lg border aspect-square"}>K</span>
+        </button>
     );
 }
 
@@ -685,11 +658,20 @@ function App() {
     const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
 
     const [tabs, setTabs] = useState<Tab[]>([
-        new welcomeTab()
+        new welcomeTab(),
+        new MakerKioskTab(),
+        new MapViewTab(),
+        new Settings(),
     ])
 
     const [tabIndex, setTabIndex] = useState<number>(0)
+    useEffect(()=>{
+        window.addEventListener('contextmenu', (e) => {
 
+            e.preventDefault();
+            invoke('show_context_menu');
+        })
+    })
     useEffect(() => {
         const savedPrefs = loadAppearancePrefs();
         applyAppearancePrefs(savedPrefs);
@@ -721,7 +703,9 @@ function App() {
             }
 
             const isAdmin = result.perms === UserPerms.Staff;
-            const targetName = isAdmin ? "Admin View" : "User View";
+            // Non-admin users land on the Map tab now that User View has
+            // been split into Map + Search for Items.
+            const targetName = isAdmin ? "Admin View" : "Map";
             recordAccountLogin({
                 label: result.displayName || result.email || "Google account",
                 email: result.email,
@@ -737,7 +721,10 @@ function App() {
                     return prevTabs;
                 }
 
-                const nextTab: Tab = isAdmin ? new AdminViewTab() : new UserViewTab();
+                // Opened on demand after sign-in — the user should be able
+                // to close it.
+                const nextTab: Tab = isAdmin ? new AdminViewTab() : new MapViewTab();
+                nextTab.closable = true;
                 setTabIndex(prevTabs.length);
                 return [...prevTabs, nextTab];
             });
@@ -748,22 +735,17 @@ function App() {
         };
     }, []);
 
-    const handleNewTab = (): number => {
-
-        const newIndex = tabs.length
-
-        setTabs((prev) => {
-            return [...prev, new welcomeTab()]
-        })
-
-        setTabIndex(newIndex)
-
-        return newIndex
-    }
 
     const handleClosingTab:(index:number)=>void = (index: number) => {
 
         setTabs((prevTabs) => {
+
+            // Guard: even if something calls this on a non-closable tab,
+            // don't let it disappear. The tab bar UI already hides the
+            // close control for these, but keep the state layer safe too.
+            if (!prevTabs[index]?.closable) {
+                return prevTabs
+            }
 
             const newTabs = prevTabs.filter((_, i) => i !== index)
 
@@ -824,6 +806,27 @@ function App() {
         })
     }
 
+    // Appends a fresh, closable placeholder tab and returns its index.
+    // Callers (e.g. openLoginTab, focusTab, LoginCommand) immediately
+    // follow this with setTab(...) to swap in the real tab content — this
+    // just reserves the slot. Any tab created through this path is opened
+    // on demand, so it's always marked closable.
+    //
+    // Constraint: the returned index is only valid if setTab(...) is
+    // called synchronously afterward, before any other tab-list update —
+    // it's derived from the current render's tabs.length, not from inside
+    // the setTabs updater.
+    const handleNewTab = (): number => {
+        setTabs((prevTabs) => {
+            const placeholder = new welcomeTab()
+            placeholder.name = "New Tab"
+            placeholder.closable = true
+            return [...prevTabs, placeholder]
+        })
+
+        return tabs.length
+    }
+
     const handleMaterialSearch = (query: string) => {
         const trimmedQuery = query.trim();
 
@@ -831,7 +834,7 @@ function App() {
             return;
         }
 
-        const existingIndex = tabs.findIndex(tab => tab.name === "User View");
+        const existingIndex = tabs.findIndex(tab => tab.name === "Search for Items");
 
         if (existingIndex !== -1) {
             setTabIndex(existingIndex);
@@ -847,7 +850,10 @@ function App() {
 
         setTabs((prevTabs) => {
             setTabIndex(prevTabs.length);
-            return [...prevTabs, new UserViewTab(trimmedQuery)];
+            // Ad-hoc tab opened from a search — user-closable.
+            const searchTab = new MaterialSearchTab(trimmedQuery);
+            searchTab.closable = true;
+            return [...prevTabs, searchTab];
         });
     }
     const openLoginTab = useCallback(() => {
@@ -859,24 +865,24 @@ function App() {
         }
 
         const newIndex = handleNewTab();
-        setTab(
-            newIndex,
-            new LoginTab({
-                tabs,
-                setTabs,
-                tabIndex,
-                setTabIndex,
-                handleNewTab,
-                setTab,
-                handleClosingTab,
-                handleMaterialSearch,
-            }, newIndex),
-        );
-    }, [handleClosingTab, handleMaterialSearch, handleNewTab, setTab, tabIndex, tabs]);
+        // Opened on demand — user-closable. handleNewTab is included in
+        // the props object below since it's now part of BasicTabProps.
+        const loginTab = new LoginTab({
+            tabs,
+            setTabs,
+            tabIndex,
+            setTabIndex,
+            setTab,
+            handleClosingTab,
+            handleMaterialSearch,
+            handleNewTab,
+        }, newIndex);
+        loginTab.closable = true;
+        setTab(newIndex, loginTab);
+    }, [handleClosingTab, handleMaterialSearch, setTab, tabIndex, tabs, handleNewTab]);
 
     useEffect(() => {
         const onOpenLogin = () => openLoginTab();
-
         window.addEventListener("viventory:open-login", onOpenLogin);
         return () => window.removeEventListener("viventory:open-login", onOpenLogin);
     }, [openLoginTab]);
@@ -906,23 +912,13 @@ function App() {
     })
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.metaKey && event.key === 'y') {
+            if (event.metaKey && event.key === 'k') {
                 setCmdBarVis((prev) => !prev);
             }
 
             if (event.metaKey && event.ctrlKey && event.key.toLowerCase() === 'f') {
                 event.preventDefault();
                 void toggleFullscreen();
-            }
-
-            if (event.metaKey && event.key.toLowerCase() === 't') {
-                event.preventDefault();
-                handleNewTab();
-            }
-
-            if (event.metaKey && event.key.toLowerCase() === 'w') {
-                event.preventDefault();
-                handleClosingTab(tabIndex);
             }
 
             if (event.ctrlKey && event.key === 'Tab' && tabs.length > 0) {
@@ -1045,12 +1041,13 @@ function App() {
                         flexDirection: "column",
                         gap: "0px",
                         height: "100vh",
-                        width: "100vw",
+                        width: "100%",
                         overflow: "hidden",
                         boxSizing: "border-box",
                         background: "var(--viventory-bg)",
                         color: "var(--viventory-text)",
                         fontSize: "var(--viventory-font-size)",
+                        overflowX:"hidden"
                     }}
                 >
                     {cmdBarVis && <CommandBar setVisibility={setCmdBarVis} />}
@@ -1061,25 +1058,62 @@ function App() {
                         handleNewTab={handleNewTab}
                         setTab={setTab}
                     />}
-                    <AppCommandEntry setCmdBarVis={setCmdBarVis} />
                     <div
                         style={{
                             flex: 1,
                             minHeight: 0,
                             display: "flex",
-                            flexDirection: "column"
+                            flexDirection: "column",
                         }}
                     >
-                        <RenderTabBar
-                            tabs={tabs}
-                            setTabs={setTabs}
-                            onClose={handleClosingTab}
-                            currentTabIndex={tabIndex}
-                            setTabIndex={setTabIndex}
-                            handleNewTab={handleNewTab}
-                            moveTab={moveTab}
-                        />
+                        <div
+                            style={{
+                                flex: 1,
+                                minHeight: 0,
+                                display: "flex",
+                                flexDirection: "row",
+                                maxHeight:"50px"
+                            }}
+                        >
+                            <RenderTabBar
+                                tabs={tabs}
+                                setTabs={setTabs}
+                                onClose={handleClosingTab}
+                                currentTabIndex={tabIndex}
+                                setTabIndex={setTabIndex}
+                                handleNewTab={handleNewTab}
+                                moveTab={moveTab}
+                            />
 
+                            <AppCommandEntry setCmdBarVis={setCmdBarVis} />
+                            <button
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    background: "var(--viventory-bg)",
+                                    color: "var(--viventory-text)",
+                                    borderRadius: "6px",
+                                    border: "1px solid var(--viventory-border)",
+                                    padding: "7px",
+                                    cursor: "pointer",
+                                    boxShadow: "0 8px 18px rgba(36, 38, 43, 0.08)",
+                                }}
+                                onClick={() => {
+                                    const existingIndex = tabs.findIndex(
+                                        (tab) => tab.name === "Settings"
+                                    );
+                                    if (existingIndex !== -1) {
+                                        setTabIndex(existingIndex);
+                                    } else {
+                                        const newIndex = handleNewTab();
+                                        setTab(newIndex, new Settings());
+                                    }
+                                }}
+                            >
+                                <BsGearFill size={18} color="currentColor" />
+                            </button>
+                        </div>
                         {RenderTab(tabs, tabIndex)}
                     </div>
                 </main>}

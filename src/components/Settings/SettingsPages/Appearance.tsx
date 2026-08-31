@@ -7,6 +7,7 @@ import {
     loadAppearancePrefs,
     saveAppearancePrefs,
 } from "../appearancePreferences";
+import {ThemeSetter} from "../../Theme/ThemeHelper.tsx";
 
 interface SearchableDropdownProps {
     enumObject: Record<string, string | number>;
@@ -325,18 +326,7 @@ function AppearanceContent() {
                 />
             </label>
             </section>
+            <ThemeSetter/>
         </div>
     );
 }
-
-const Appearance: SettingsPage = {
-    name: "Appearance",
-
-    content: <AppearanceContent />,
-
-    save: () => {
-        return {};
-    },
-};
-
-export default Appearance;

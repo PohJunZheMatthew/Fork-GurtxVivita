@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { platform } from "@tauri-apps/plugin-os";
 import { translateSettingsPageName, useI18n } from "../../i18n/i18n";
+import {IoArrowBack} from "react-icons/io5";
+import { motion } from "framer-motion";
 
 async function getPages(): Promise<SettingsPage[]> {
     //@ts-ignore
@@ -18,7 +20,6 @@ async function getPages(): Promise<SettingsPage[]> {
 
     for (const path in modules) {
         const module: any = await modules[path]();
-
         if (module.default) {
             pages.push(module.default);
         }
@@ -39,6 +40,7 @@ function isMobilePlatform(): boolean {
 
 function SettingsContent() {
     const [pages, setPages] = useState<SettingsPage[]>([]);
+    const [isHome, setRequireToGoHome] = useState<boolean>(true);
     const [selectedIndex, setSelectedIndex] =
         useState<number>(0);
     const { language, t } = useI18n();
@@ -57,138 +59,96 @@ function SettingsContent() {
     return (
         <div
             style={{
-                display: "flex",
-                flexDirection: isMobile ? "column" : "row",
-                gap: isMobile ? "14px" : "20px",
-                padding: isMobile ? "14px" : "20px",
-                minHeight: "100%",
-                boxSizing: "border-box",
-                background: "var(--viventory-welcome-bg)",
-                color: "var(--viventory-text)",
-                fontSize: "var(--viventory-font-size)",
+                display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
+                gap: isMobile ? '14px' : '20px',
+                padding: isMobile ? '14px' : '20px',
+                minHeight: '100%',
+                boxSizing: 'border-box',
+                background: 'var(--viventory-bg)',
+                color: 'var(--viventory-text)',
+                fontSize: 'var(--viventory-font-size)',
             }}
         >
-            {/* Sidebar */}
-            <div
-                style={{
-                    width: isMobile ? "100%" : "280px",
-                    flexShrink: 0,
-                    borderRight: isMobile ? "none" : "1px solid var(--viventory-border)",
-                    borderBottom: isMobile ? "1px solid var(--viventory-border)" : "none",
-                    paddingRight: isMobile ? 0 : "18px",
-                    paddingBottom: isMobile ? "14px" : 0,
-                }}
-            >
-                <p
-                    style={{
-                        margin: "0 0 8px",
-                        color: "var(--viventory-welcome-accent)",
-                        fontSize: "13px",
-                        fontWeight: 850,
-                        textTransform: "uppercase",
-                        letterSpacing: 0,
-                    }}
-                >
-                    {t("settings.controlRoom")}
-                </p>
-                <h2
-                    style={{
-                        margin: "0 0 16px",
-                        fontSize: isMobile ? "26px" : "34px",
-                        fontWeight: 850,
-                        letterSpacing: 0,
-                        color: "var(--viventory-text)",
-                    }}
-                >
-                    {t("settings.title")}
-                </h2>
-
-
-                <input
-                    type="search"
-                    placeholder={t("settings.searchPlaceholder")}
-                    style={{
-                        width: "100%",
-                        marginBottom: "14px",
-                        minHeight: isMobile ? "44px" : "42px",
-                        borderRadius: "6px",
-                        padding: "0 14px",
-                        background: "var(--viventory-surface)",
-                        color: "var(--viventory-text)",
-                        border: "1px solid var(--viventory-border)",
-                        boxSizing: "border-box",
-                    }}
-                />
-
-                <div
-                    style={
-                        isMobile
-                            ? {
-                                display: "flex",
-                                flexDirection: "row",
-                                gap: "8px",
-                                overflowX: "auto",
-                                paddingBottom: "4px",
-                                WebkitOverflowScrolling: "touch",
-                            }
-                            : {
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "5px",
-                            }
-                    }
-                >
-                    {
-                        pages.map((page, index) => (
+            {isHome ? (
+                <div className="w-full">
+                    <p
+                        style={{
+                            margin: '0 0 8px',
+                            color: 'var(--viventory-border)',
+                            fontSize: '13px',
+                            fontWeight: 850,
+                            textTransform: 'uppercase',
+                            letterSpacing: 0,
+                        }}
+                    >
+                        {t("settings.controlRoom")}
+                    </p>
+                    <h2
+                        style={{
+                            margin: '0 0 16px',
+                            fontSize: isMobile ? '26px' : '34px',
+                            fontWeight: 850,
+                            letterSpacing: 0,
+                            color: 'var(--viventory-text)',
+                        }}
+                    >
+                        {t("settings.title")}
+                    </h2>
+                    <div
+                        style={{
+                            display: 'grid',
+                            gap: '10px',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                        }}
+                    >
+                        {pages.map((page, index) => (
                             <button
                                 key={index}
-                                onClick={() =>
-                                    setSelectedIndex(index)
-                                }
+                                onClick={() => {
+                                    setSelectedIndex(index);
+                                    setRequireToGoHome(false);
+                                }}
                                 style={{
-                                    textAlign: "left",
-                                    padding: isMobile ? "10px 14px" : "12px 14px",
-                                    borderRadius: "8px",
-                                    border:
-                                        index === selectedIndex
-                                            ? "2px solid var(--viventory-tab-active-border)"
-                                            : "1px solid var(--viventory-border)",
-                                    background:
-                                        index === selectedIndex
-                                            ? "var(--viventory-active-tab)"
-                                            : "var(--viventory-surface)",
-                                    color: "var(--viventory-text)",
-                                    cursor: "pointer",
+                                    textAlign: 'center',
+                                    padding: isMobile ? '10px 14px' : '12px 14px',
+                                    borderRadius: '8px',
+                                    border: '1px solid var(--viventory-border)',
+                                    background: 'var(--viventory-surface)',
+                                    color: 'var(--viventory-text)',
+                                    cursor: 'pointer',
                                     fontWeight: 750,
-                                    whiteSpace: isMobile ? "nowrap" : "normal",
+                                    whiteSpace: isMobile ? 'nowrap' : 'normal',
                                     flexShrink: isMobile ? 0 : undefined,
                                 }}
                             >
                                 {translateSettingsPageName(language, page.name)}
+                                <p style={{ fontWeight: 350 }}>{page.name}</p>
                             </button>
-                        ))
-                    }
+                        ))}
+                    </div>
                 </div>
-            </div>
-
-            {/* Content */}
-            <div
-                style={{
-                    flex: 1,
-                    minWidth: 0,
-                    padding: isMobile ? "4px 0 0" : "8px 0 0",
-                }}
-            >
-                {
-                    pages.length > 0
-                        ? pages[selectedIndex]?.content
-                        : <p>Loading settings...</p>
-                }
-            </div>
+            ) : (
+                <div
+                    style={{
+                        flex: 1,
+                        minWidth: 0,
+                        padding: isMobile ? '4px 0 0' : '8px 0 0',
+                    }}
+                >
+                    <button
+                        onClick={() => { setRequireToGoHome(true); }}
+                        className="left-0 flex flex-row items-center gap-2"
+                    >
+                        <IoArrowBack />
+                        <motion.span>Go back</motion.span>
+                    </button>
+                    {pages.length > 0 ? pages[selectedIndex]?.content : <p>Loading settings...</p>}
+                </div>
+            )}
         </div>
     );
 }
-
 export default class Settings implements Tab {
     id = crypto.randomUUID()
 
@@ -203,7 +163,7 @@ export default class Settings implements Tab {
 
 export interface SettingsPage {
     name: string;
-
+    description:string;
     content: ReactElement;
 
     save: () => {};

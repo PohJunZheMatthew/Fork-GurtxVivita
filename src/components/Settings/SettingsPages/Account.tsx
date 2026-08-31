@@ -209,7 +209,7 @@ function AccountContent() {
 
 const Account: SettingsPage = {
     name: "Account",
-
+    description:"Account stuff",
     content: <AccountContent />,
 
     save: () => {
